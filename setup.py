@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name="github-secret-syncer",
-    version="0.0.1",
+    version="0.0.2",
     author="thejimmylin",
     author_email="b00502013@gmail.com",
     description="Github Secret Syncer.",

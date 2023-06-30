@@ -27,6 +27,8 @@ class SecretListReponse(TypedDict):
 
 
 class GithubSecretManager:
+    """Manage Github Secrets"""
+
     _public_key: PublicKey | None
 
     def __init__(self, owner: str, repo: str, github_pat: str, github_api_version: str = "2022-11-28"):
@@ -89,18 +91,33 @@ def sync_secrets(
     owner: str,
     repo: str,
     github_pat: str,
+    delete_missing: bool = True,
     github_api_version: str = "2022-11-28",
 ) -> None:
+    """Sync secrets from dotenv to Github Actions
+
+    This function can be seen as an example of how to use GithubSecretManager.
+    Feel free to copy and modify it to fit your needs.
+    """
     secret_manager = GithubSecretManager(owner, repo, github_pat, github_api_version)
     github_secrets = secret_manager.list_repo_secrets()
-    dotenv_secrets = dotenv.dotenv_values(dotenv_path)
+    _dotenv_secrets = dotenv.dotenv_values(dotenv_path)
 
-    for secret in github_secrets["secrets"]:
-        if secret["name"] not in dotenv_secrets:
-            logger.info(f"Deleting secret `{secret['name']}` from Github")
-            secret_manager.delete_repo_secret(secret["name"])
-
-    for secret_name, secret_value in dotenv_secrets.items():
+    # Ignore secrets like `foo` (without `=`)
+    # This will not ignore secrets like `bar=` (it's value will be `""`)
+    dotenv_secrets: dict[str, str] = {}
+    for secret_name, secret_value in _dotenv_secrets.items():
         if secret_value is not None:
-            logger.info(f"Putting secret `{secret_name}` to Github")
-            secret_manager.put_repo_secret(secret_name, secret_value)
+            dotenv_secrets[secret_name] = secret_value
+
+    if delete_missing:
+        # Delete secrets that are in Github but not in dotenv
+        for secret in github_secrets["secrets"]:
+            if secret["name"] not in dotenv_secrets:
+                logger.info(f"Deleting secret `{secret['name']}` from Github")
+                secret_manager.delete_repo_secret(secret["name"])
+
+    # Put secrets that are in dotenv
+    for secret_name, secret_value in dotenv_secrets.items():
+        logger.info(f"Putting secret `{secret_name}` to Github")
+        secret_manager.put_repo_secret(secret_name, secret_value)

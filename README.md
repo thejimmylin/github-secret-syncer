@@ -9,7 +9,7 @@ Before publishing, you need to setup a virtual Python environment and install so
 ```
 python3 -m venv .venv
 source .venv/bin/activate
-pip install wheel twine
+pip install -U pip wheel twine
 ```
 
 ## Publish to test.pypi.org (for testing purpose)
@@ -22,7 +22,7 @@ python setup.py sdist bdist_wheel && python -m twine upload --repository-url htt
 
 install it with:
 ```
-pip install -i https://test.pypi.org/simple/ github-secret-syncer
+pip install -i https://test.pypi.org/simple/ your-lovely-package-name
 ```
 
 ## Publish to pypi.org
@@ -35,5 +35,5 @@ python setup.py sdist bdist_wheel && python -m twine upload dist/* && rm -rf dis
 
 You can then install it with regular pip command you normally use:
 ```
-pip install github-secret-syncer
+pip install your-lovely-package-name
 ```
