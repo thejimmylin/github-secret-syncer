@@ -2,38 +2,33 @@
 
 Synchronize Github secrets with local `.env` file.
 
-# Publish to PyPI
+![Screenshot](docs/quickstart.png)
 
-## Install building tools
-Before publishing, you need to setup a virtual Python environment and install some tools.
+# Quickstart
+
+Install it with pip:
+
 ```
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -U pip wheel twine
-```
-
-## Publish to test.pypi.org (for testing purpose)
-This makes you test your package before actually publishing it.
-
-```python
-# Build & Upload & Cleanup
-python setup.py sdist bdist_wheel && python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/* && rm -rf dist build *egg-info
+pip install github-secret-syncer
 ```
 
-install it with:
-```
-pip install -i https://test.pypi.org/simple/ your-lovely-package-name
-```
-
-## Publish to pypi.org
-This makes you actually publish the package to `pypi.org` (where you can `pip install` packages from it).
+Have a `.env` and `quickstart.py`
 
 ```python
-# Build & Upload & Cleanup
-python setup.py sdist bdist_wheel && python -m twine upload dist/* && rm -rf dist build *egg-info
+from pathlib import Path
+
+import github_secret_syncer
+
+base_dir = Path(__file__).parent
+
+github_secret_syncer.sync_secrets(
+  dotenv_path=base_dir / ".env",
+  owner="your_github_username",
+  repo="your_github_repo_name",
+  github_pat="your_github_personal_access_token",
+)
 ```
 
-You can then install it with regular pip command you normally use:
-```
-pip install your-lovely-package-name
-```
+You will get some output like this:
+
+![Screenshot](docs/quickstart.png)
