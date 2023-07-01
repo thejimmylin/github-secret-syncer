@@ -1,17 +1,16 @@
 import setuptools
+from pathlib import Path
 
+base_dir = Path(__file__).parent.resolve()
+long_description = (base_dir / "README.md").read_text(encoding="utf-8")
 
 setuptools.setup(
     name="github-secret-syncer",
-    version="0.0.2",
+    version="0.0.6",
     author="thejimmylin",
     author_email="b00502013@gmail.com",
     description="Github Secret Syncer.",
-    long_description=(
-        "# Github Secret Syncer..\n"
-        "\n"
-        "Synchronize Github secrets with local `.env` file.\n"
-    ),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/thejimmylin/github-secret-syncer",
     packages=setuptools.find_packages(),

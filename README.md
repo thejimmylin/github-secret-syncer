@@ -2,7 +2,7 @@
 
 Synchronize Github secrets with local `.env` file.
 
-![Screenshot](docs/quickstart.png)
+![Screenshot](https://raw.githubusercontent.com/thejimmylin/github-secret-syncer/master/docs/quickstart.png)
 
 # Quickstart
 
@@ -22,13 +22,13 @@ import github_secret_syncer
 base_dir = Path(__file__).parent
 
 github_secret_syncer.sync_secrets(
-  dotenv_path=base_dir / ".env",
-  owner="your_github_username",
-  repo="your_github_repo_name",
-  github_pat="your_github_personal_access_token",
+    dotenv_path=base_dir / ".env",
+    owner="your_github_username",
+    repo="your_github_repo_name",
+    github_pat="your_github_personal_access_token",
 )
 ```
 
 You will get some output like this:
 
-![Screenshot](docs/quickstart.png)
+![Screenshot](https://raw.githubusercontent.com/thejimmylin/github-secret-syncer/master/docs/quickstart.png)
