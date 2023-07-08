@@ -6,7 +6,7 @@ long_description = (base_dir / "README.md").read_text(encoding="utf-8")
 
 setuptools.setup(
     name="github-secret-syncer",
-    version="0.0.6",
+    version="0.0.7",
     author="thejimmylin",
     author_email="b00502013@gmail.com",
     description="Github Secret Syncer.",
