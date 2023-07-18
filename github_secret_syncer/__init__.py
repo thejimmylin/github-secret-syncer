@@ -1,11 +1,13 @@
+import logging
 from base64 import b64encode
 from pathlib import Path
 from typing import Any, TypedDict, cast
 
 import dotenv
 import requests
-from loguru import logger
 from nacl import encoding, public
+
+logger = logging.getLogger(__name__)
 
 __all__ = ["GithubSecretManager", "sync_secrets"]
 
